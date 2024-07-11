@@ -11,6 +11,13 @@ end
 
 local packer_bootstrap = ensure_packer()
 
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins-setup.lua source <afile> | PackerSync
+  augroup end
+]])
+
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use {'nvim-lua/plenary.nvim'}
@@ -38,6 +45,19 @@ return require('packer').startup(function(use)
   use {'L3MON4D3/LuaSnip'}
   use {'saadparwaiz1/cmp_luasnip'}
   use {'rafamadriz/friendly-snippets'}
+
+--lsp
+    
+  use {'williamboman/mason.nvim'}
+  use {'williamboman/mason-lspconfig.nvim'}
+  -- config lsp server
+  use {'neovim/nvim-lspconfig'}
+  use {'hrsh7th/cmp-nvim-lsp'}
+  use {'glepnir/lspsaga.nvim', branch = 'main'}
+  use {'jose-elias-alvarez/typescript.nvim'}
+  use {'onsails/lspkind.nvim'}
+
+
 
   if packer_bootstrap then
     require('packer').sync()
